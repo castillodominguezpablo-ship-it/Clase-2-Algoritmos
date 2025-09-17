@@ -96,8 +96,30 @@ class NReinas:
             filas.append(fila.rstrip())
         return "\n".join(filas)
 
-def ejecutar_experimento(n_inicio: int = 4, n_fin: int = 8) -> None:
-    """Ejecuta backtracking para n en [n_inicio..n_fin], imprime existencia, #soluciones y tiempo."""
+def _imprimir_soluciones(solver: "NReinas", mostrar_soluciones: bool, mostrar_tablero: bool, limite: int) -> None:
+    if not mostrar_soluciones:
+        return
+    if limite is not None and limite > 0:
+        to_show = solver.soluciones[:limite]
+    else:
+        to_show = solver.soluciones
+    for i, sol in enumerate(to_show, 1):
+        print(f"- Solución {i}: {sol}")
+        if mostrar_tablero:
+            print(solver.tablero_str(sol), "\n")
+
+
+def ejecutar_experimento(
+    n_inicio: int = 4,
+    n_fin: int = 8,
+    *,
+    mostrar_soluciones: bool = False,
+    mostrar_tablero: bool = False,
+    limite_impresion: int = 0,
+) -> None:
+    """Ejecuta backtracking para n en [n_inicio..n_fin].
+    Puede opcionalmente imprimir las soluciones y tableros (si limite_impresion <=0, imprime todas).
+    """
     if n_inicio < 1 or n_fin < 1 or n_inicio > n_fin:
         raise ValueError("Rango inválido: asegúrate de que 1 <= n_inicio <= n_fin")
     print("🧠 Resultados N-Reinas (backtracking)\n")
@@ -111,6 +133,7 @@ def ejecutar_experimento(n_inicio: int = 4, n_fin: int = 8) -> None:
         t1 = time.perf_counter()
         existe = "Sí" if solver.cantidad_soluciones() > 0 else "No"
         print(f"{n:>2}  {existe:>9}  {solver.cantidad_soluciones():>12}  {t1 - t0:>10.4f}")
+        _imprimir_soluciones(solver, mostrar_soluciones, mostrar_tablero, limite_impresion)
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Resolver N-Reinas (backtracking y min-conflicts).")
@@ -123,7 +146,7 @@ def parse_args() -> argparse.Namespace:
                         help="Método de resolución.")
     parser.add_argument("--mostrar-soluciones", action="store_true", help="Imprime soluciones encontradas.")
     parser.add_argument("--mostrar-tablero", action="store_true", help="Imprime tablero ASCII de las soluciones.")
-    parser.add_argument("--limite-impresion", type=int, default=5, help="Máx. soluciones a imprimir.")
+    parser.add_argument("--limite-impresion", type=int, default=5, help="Máx. soluciones a imprimir (<=0 = todas).")
     parser.add_argument("--max-pasos", type=int, default=10_000, help="Máx. pasos para min-conflicts.")
     parser.add_argument("--reinicios", type=int, default=50, help="Reinicios aleatorios para min-conflicts.")
     return parser.parse_args()
@@ -136,7 +159,13 @@ def main() -> None:
         if args.n_inicio < 1 or args.n_fin < 1 or args.n_inicio > args.n_fin:
             print("Error: rango inválido. Usa valores positivos y asegúrate de que n-inicio <= n-fin.")
             return
-        ejecutar_experimento(args.n_inicio, args.n_fin)
+        ejecutar_experimento(
+            args.n_inicio,
+            args.n_fin,
+            mostrar_soluciones=args.mostrar_soluciones,
+            mostrar_tablero=args.mostrar_tablero,
+            limite_impresion=args.limite_impresion,
+        )
         return
 
     solver = NReinas(args.n, seed=args.seed)
