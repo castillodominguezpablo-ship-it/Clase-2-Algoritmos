@@ -147,7 +147,11 @@ def main() -> None:
         t1 = time.perf_counter()
         print(f"n={args.n}: {solver.cantidad_soluciones()} soluciones en {t1 - t0:.4f}s")
         if args.mostrar_soluciones:
-            to_show = solver.soluciones[: max(0, args.limite_impresion)]
+            # Si limite_impresion <= 0, mostrar todas las soluciones
+            if args.limite_impresion is not None and args.limite_impresion > 0:
+                to_show = solver.soluciones[: args.limite_impresion]
+            else:
+                to_show = solver.soluciones
             for i, sol in enumerate(to_show, 1):
                 print(f"- Solución {i}: {sol}")
                 if args.mostrar_tablero:

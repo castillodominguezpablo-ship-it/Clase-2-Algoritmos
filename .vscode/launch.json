@@ -59,6 +59,36 @@
       ],
       "cwd": "${workspaceFolder}",
       "env": {}
+    },
+    {
+      "name": "Python: n=7 (todas)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "-n", "7",
+        "--mostrar-soluciones",
+        "--mostrar-tablero",
+        "--limite-impresion", "0"
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {}
+    },
+    {
+      "name": "Python: n=8 (todas)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "-n", "8",
+        "--mostrar-soluciones",
+        "--mostrar-tablero",
+        "--limite-impresion", "0"
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {}
     }
   ]
 }
