@@ -29,6 +29,21 @@
       ],
       "cwd": "${workspaceFolder}",
       "env": {}
+    },
+    {
+      "name": "Python: n=5 (10 soluciones)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "-n", "5",
+        "--mostrar-soluciones",
+        "--mostrar-tablero",
+        "--limite-impresion", "10"
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {}
     }
   ]
 }
