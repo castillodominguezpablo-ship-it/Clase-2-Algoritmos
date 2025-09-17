@@ -44,6 +44,21 @@
       ],
       "cwd": "${workspaceFolder}",
       "env": {}
+    },
+    {
+      "name": "Python: n=6 (4 soluciones)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "-n", "6",
+        "--mostrar-soluciones",
+        "--mostrar-tablero",
+        "--limite-impresion", "4"
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {}
     }
   ]
 }
