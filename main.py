@@ -5,7 +5,7 @@ import argparse
 from typing import List, Optional
 
 class NReinas:
-    """
+    ""
     Resolver del problema de las N-Reinas.
     Representación: vector de tamaño n donde el índice es la columna y el valor la fila.
     """
