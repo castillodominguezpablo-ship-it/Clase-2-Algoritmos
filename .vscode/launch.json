@@ -15,6 +15,20 @@
       ],
       "cwd": "${workspaceFolder}",
       "env": {}
+    },
+    {
+      "name": "Python: experimento 5-8",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--experimento",
+        "--n-inicio", "5",
+        "--n-fin", "8"
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {}
     }
   ]
 }
