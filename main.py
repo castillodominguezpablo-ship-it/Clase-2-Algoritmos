@@ -96,12 +96,15 @@ class NReinas:
             filas.append(fila.rstrip())
         return "\n".join(filas)
 
-def ejecutar_experimento(n_vals = range(4, 9)) -> None:
-    """Ejecuta backtracking para n=4..8, imprime si existe solución, #soluciones y tiempo."""
+def ejecutar_experimento(n_inicio: int = 4, n_fin: int = 8) -> None:
+    """Ejecuta backtracking para n en [n_inicio..n_fin], imprime existencia, #soluciones y tiempo."""
+    if n_inicio < 1 or n_fin < 1 or n_inicio > n_fin:
+        raise ValueError("Rango inválido: asegúrate de que 1 <= n_inicio <= n_fin")
     print("🧠 Resultados N-Reinas (backtracking)\n")
+    print(f"Rango: n={n_inicio}..{n_fin}")
     print(f"{'n':>2}  {'¿Existe?':>9}  {'#Soluciones':>12}  {'Tiempo (s)':>10}")
     print("-" * 40)
-    for n in n_vals:
+    for n in range(n_inicio, n_fin + 1):
         solver = NReinas(n)
         t0 = time.perf_counter()
         solver.resolver()
@@ -112,6 +115,8 @@ def ejecutar_experimento(n_vals = range(4, 9)) -> None:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Resolver N-Reinas (backtracking y min-conflicts).")
     parser.add_argument("--experimento", action="store_true", help="Ejecuta la tabla para n=4..8 con backtracking.")
+    parser.add_argument("--n-inicio", type=int, default=4, help="Valor inicial de n para el experimento (incluido).")
+    parser.add_argument("--n-fin", type=int, default=8, help="Valor final de n para el experimento (incluido).")
     parser.add_argument("-n", "--n", type=int, default=8, help="Tamaño del tablero (por defecto 8).")
     parser.add_argument("--seed", type=int, default=None, help="Semilla para aleatoriedad (opcional).")
     parser.add_argument("--metodo", choices=["backtracking", "probabilista"], default="backtracking",
@@ -127,7 +132,11 @@ def main() -> None:
     args = parse_args()
 
     if args.experimento:
-        ejecutar_experimento()
+        # Validar y ejecutar experimento en rango
+        if args.n_inicio < 1 or args.n_fin < 1 or args.n_inicio > args.n_fin:
+            print("Error: rango inválido. Usa valores positivos y asegúrate de que n-inicio <= n-fin.")
+            return
+        ejecutar_experimento(args.n_inicio, args.n_fin)
         return
 
     solver = NReinas(args.n, seed=args.seed)
